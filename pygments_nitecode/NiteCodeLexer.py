@@ -13,13 +13,14 @@ class NiteCodeLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'\/\/.*$', Comment.Single),
+            (r'\/\/.*?$', Comment.Single),
+            (r'(?s)\/\*.*?\*\/', Comment.Multiline),
             (r'0x[0-9a-fA-F]+([ui]((8)|(16)|(32)|(64)))?', Number.Hex),
             (r'[0-9]+([ui]((8)|(16)|(32)|(64)))?', Number.Integer),
-            (r'[+-~=^|&<>!&?:\/*]', Operator),
-            (r'[;{}()\[\],.]', Punctuation),
+            (r'[%+\-~=^|&<>!&?:\/*]', Operator),
+            (r'[;{}()\[\],\.]', Punctuation),
             (r'[a-zA-Z_]\w*', Name),
-            # (r'(L?)(")', bygroups(String.Affix, String), 'string'),
+            (r'".*?"', String.Affix, String),
             (words((
                 # Types
                 'u8', 'u16', 'u32', 'u64',
@@ -32,10 +33,10 @@ class NiteCodeLexer(RegexLexer):
                 'return',
                 # Other
                 'use', 'type'
-            )), Keyword),
+            ), suffix=r'\b'), Keyword),
             (words((
                 # Constants
                 'false', 'true', 'nil'
-            )), Keyword.Constant),
+            ), suffix=r'\b'), Keyword.Constant),
         ]
     }
