@@ -1,5 +1,5 @@
 """A Pygments lexer for NiteCode language."""
-from pygments.lexer import RegexLexer, words, bygroups
+from pygments.lexer import RegexLexer, words, bygroups, include
 from pygments.token import *
 
 __all__ = ("NiteCodeLexer",)
@@ -13,30 +13,30 @@ class NiteCodeLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'\/\/.*?$', Comment.Single),
+            (r'\/\/.*?\n', Comment.Single),
             (r'(?s)\/\*.*?\*\/', Comment.Multiline),
             (r'0x[0-9a-fA-F]+([ui]((8)|(16)|(32)|(64)))?', Number.Hex),
             (r'[0-9]+([ui]((8)|(16)|(32)|(64)))?', Number.Integer),
+            (r'0b[01]+([ui]((8)|(16)|(32)|(64)))?', Number.Bin),
             (r'[%+\-~=^|&<>!&?:\/*]', Operator),
             (r'[;{}()\[\],\.]', Punctuation),
-            (r'[a-zA-Z_]\w*', Name),
-            (r'".*?"', String.Affix, String),
+            (r'\'([^\']|\\[abefnrtv\\\'\"]|\\u[0-9a-fA-F]+)\'', String.Char),
             (words((
-                # Types
                 'u8', 'u16', 'u32', 'u64',
                 'i8', 'i16', 'i32', 'i64',
                 'f32', 'f64',
-                'void',
-                # Flow keywords
-                'for', 'do', 'while',
+                'void'
+            ), suffix=r'\b'), Keyword.Type),
+            (words((
+                'use',
+                'type', 'enum',
                 'if', 'else',
-                'return',
-                # Other
-                'use', 'type'
+                'while', 'do', 'loop', 'for'
+                'break', 'continue', 'return'
             ), suffix=r'\b'), Keyword),
             (words((
-                # Constants
-                'false', 'true', 'nil'
+                'true', 'false', 'nil'
             ), suffix=r'\b'), Keyword.Constant),
+            (r'[a-zA-Z_]\w*', Name),
         ]
     }

@@ -8,7 +8,7 @@ nitecode=pygments_nitecode:NiteCodeLexer
 
 setup(
     name='pygments-nitecode',
-    version='0.0.4',
+    version='0.0.6',
     description='Pygments lexer package for NiteCode language.',
 	# long_description=open('README.rst').read(),
     author='NiTiSon',
