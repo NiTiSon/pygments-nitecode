@@ -8,9 +8,9 @@ nitecode=pygments_nitecode:NiteCodeLexer
 
 setup(
     name='pygments-nitecode',
-    version='0.0.1',
+    version='0.0.3',
     description='Pygments lexer package for NiteCode language.',
-	long_description=open('README.md').read(),
+	# long_description=open('README.rst').read(),
     author='NiTiSon',
     url='https://github.com/NiTiSon/pygment_nitecode',
     packages=find_packages(),
